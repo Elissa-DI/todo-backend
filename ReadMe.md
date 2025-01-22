@@ -27,29 +27,42 @@ This is a task management backend application built with **Node.js**, **TypeScri
    ```bash
    git clone https://github.com/Elissa-DI/todo-backend.git
    cd todo-backend
-Install dependencies:
+   ```
+
+2. Install dependencies:
 
    ```bash
    npm install
+   ```
 
-## Or
+   ## Or
    ```bash
    yarn install
-Set up environment variables:
+   ```
 
-## Check env.example
+3. Set up environment variables:
 
+   ## Check env.example
 
-Ensure your MySQL server is running and the database specified in DATABASE_URL exists.
-Start the server:
+   Ensure your MySQL server is running and the database specified in DATABASE_URL exists.
 
-bash
-Copy
-Edit
-npm run dev
-# or
-yarn dev
+4. Start the server:
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
 The server will start at http://localhost:3000.
 
-Scripts
-npm run dev or yarn dev: Start the development server.
+---
+
+## API Documentation
+
+For more information on the APIs, please refer to the documentation at [API Documentation](https://documenter.getpostman.com/view/26060414/2sAYQdjqJg).
+
+---
+
+## Scripts
+- `npm run dev` or `yarn dev`: Start the development server.
