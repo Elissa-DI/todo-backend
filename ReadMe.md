@@ -1,58 +1,259 @@
-# Home Assignment: Todo List Application
+# Todo Backend
 
-## Objective  
-Develop a full stack Todo List application using the provided backend code for authentication. The application should allow users to create, read, update, and delete todo items.
+This is a task management backend application built with **Node.js**, **TypeScript**, and **Express.js**. It supports user authentication and CRUD operations for managing tasks (todos).
 
-## Technologies
-- **Backend:** Express.js (authentication code provided)
-- **Frontend:** React.js (architecture is flexible)
+---
 
-## Requirements
+## Features
+- User registration and login with input validation.
+- Authentication with middleware to protect routes.
+- CRUD operations for managing todos.
+- Centralized error handling.
 
-### 1. Authentication:
-   - Implement user authentication using the provided backend code.
-   - Ensure secure login and registration processes.
-   - Use JWT or session-based authentication as per the provided backend architecture.
+---
 
-### 2. Todo List Features:
-   - **CRUD Operations:** 
-     - Users should be able to create, read, update, and delete their todo items.
-   - **Todo Item Structure:**
-     - Each todo item should have at least the following properties:
-       - Title (string)
-       - Description (string)
-       - Status (boolean: completed or not)
-       - Due Date (date)
-   - **User-specific Todos:**
-     - Ensure that each user can only manage their own todo items.
+## Prerequisites
 
-### 3. Frontend Requirements:
-   - Use React.js for the frontend.
-   - Implement a clean and user-friendly interface.
-   - Ensure responsiveness for different screen sizes.
-   - Use state management (e.g., Context API, Redux) to manage application state.
-   - Include validation for user inputs.
+- **Node.js** v16 or higher
+- **npm** or **yarn** for package management
+- Database: **MySQL** (configured via `.env` file)
 
-### 4. Additional Features (Optional):
-   - Implement sorting and filtering options for the todo list.
-   - Add user notifications for actions (e.g., todo added, updated, deleted).
-   - Provide a dark mode toggle.
+---
 
-### 5. Testing:
-   - Write unit tests for critical components and functions.
-   - Ensure the application is free of critical bugs.
+## Setup Instructions
 
-### 6. Documentation:
-   - Provide clear documentation on how to set up and run the application.
-   - Include comments in the code to explain key functionalities.
+1. Clone the repository:
 
-### 7. Submission Guidelines:
-   - Submit the code repository (e.g., GitHub) with a clear commit history.
-   - Include a README file with instructions on how to run the application.
-   - Provide a demo link if hosted online.
+   ```bash
+   git clone https://github.com/Elissa-DI/todo-backend.git
+   cd todo-backend
+Install dependencies:
 
-## Evaluation Criteria
-- Code quality and organization.
-- Functionality and adherence to requirements.
-- User interface design and user experience.
-- Testing coverage and documentation.
+bash
+Copy
+Edit
+npm install
+# or
+yarn install
+Set up environment variables:
+
+Copy the example environment file:
+
+bash
+Copy
+Edit
+cp .env.example .env
+Edit the .env file with your configuration details.
+
+Example .env file:
+
+env
+Copy
+Edit
+DATABASE_URL=mysql://username:password@localhost:3306/todo_database
+JWT_SECRET=your_secret_key
+PORT=3000
+Initialize the database:
+
+Ensure your MySQL server is running and the database specified in DATABASE_URL exists.
+If you are using migrations, run them to set up the database schema.
+Start the server:
+
+bash
+Copy
+Edit
+npm run dev
+# or
+yarn dev
+The server will start at http://localhost:3000.
+
+API Documentation
+Authentication Routes
+POST /auth/register
+Registers a new user.
+
+Request Body:
+
+json
+Copy
+Edit
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "confirmPassword": "password123"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "message": "User registered successfully",
+  "user": {
+    "id": 1,
+    "email": "user@example.com"
+  }
+}
+POST /auth/login
+Logs in a user.
+
+Request Body:
+
+json
+Copy
+Edit
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "message": "Login successful",
+  "token": "your_jwt_token"
+}
+Todo Routes
+POST /todos
+Creates a new todo.
+
+Headers:
+
+json
+Copy
+Edit
+{
+  "Authorization": "Bearer your_jwt_token"
+}
+Request Body:
+
+json
+Copy
+Edit
+{
+  "title": "Learn TypeScript",
+  "description": "Complete the TypeScript course on Udemy",
+  "dueDate": "2025-01-31"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "message": "Todo created successfully",
+  "todo": {
+    "id": 1,
+    "title": "Learn TypeScript",
+    "description": "Complete the TypeScript course on Udemy",
+    "dueDate": "2025-01-31",
+    "status": "pending"
+  }
+}
+GET /todos
+Fetches all todos for the authenticated user.
+
+Headers:
+
+json
+Copy
+Edit
+{
+  "Authorization": "Bearer your_jwt_token"
+}
+Response:
+
+json
+Copy
+Edit
+[
+  {
+    "id": 1,
+    "title": "Learn TypeScript",
+    "description": "Complete the TypeScript course on Udemy",
+    "dueDate": "2025-01-31",
+    "status": "pending"
+  }
+]
+GET /todos/:id
+Fetches a specific todo by ID.
+
+Headers:
+
+json
+Copy
+Edit
+{
+  "Authorization": "Bearer your_jwt_token"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "id": 1,
+  "title": "Learn TypeScript",
+  "description": "Complete the TypeScript course on Udemy",
+  "dueDate": "2025-01-31",
+  "status": "pending"
+}
+PUT /todos/:id
+Updates a specific todo.
+
+Headers:
+
+json
+Copy
+Edit
+{
+  "Authorization": "Bearer your_jwt_token"
+}
+Request Body:
+
+json
+Copy
+Edit
+{
+  "title": "Learn TypeScript - Updated",
+  "status": "completed"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "message": "Todo updated successfully",
+  "todo": {
+    "id": 1,
+    "title": "Learn TypeScript - Updated",
+    "description": "Complete the TypeScript course on Udemy",
+    "dueDate": "2025-01-31",
+    "status": "completed"
+  }
+}
+DELETE /todos/:id
+Deletes a specific todo.
+
+Headers:
+
+json
+Copy
+Edit
+{
+  "Authorization": "Bearer your_jwt_token"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "message": "Todo deleted successfully"
+}
+
+Scripts
+npm run dev or yarn dev: Start the development server.
